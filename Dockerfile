@@ -1,5 +1,6 @@
 FROM python:3.7-slim-buster
 WORKDIR /code
+COPY . .
 RUN sed -i "s#deb http://deb.debian.org/debian buster main#deb http://deb.debian.org/debian buster main contrib non-free#g" /etc/apt/sources.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
@@ -20,4 +21,5 @@ RUN sed -i "s#deb http://deb.debian.org/debian buster main#deb http://deb.debian
     # Fix Login A/B test detected error - https://github.com/timgrossmann/InstaPy/issues/4887#issuecomment-522290752
     && sed -i "159s#a\[text#button\[text#g" /usr/local/lib/python3.7/site-packages/instapy/xpath_compile.py
 
+EXPOSE 8080
 CMD ["python", "docker_quickstart.py"]
